@@ -26,6 +26,7 @@ class Bubble(object):
         self.lo = 1
         self.hi = len(elem)
         self.bubble_sort()
+        elem = self.elem
         self.end = time.time()
         self.cost = self.end - self.start
         pass
@@ -51,4 +52,3 @@ class Bubble(object):
 if __name__ == '__main__':
     bbl = [1, 2, 3, 4, 5, 6, 1, 2, 3]
     yebubble = Bubble(bbl)
-    print(yebubble)
