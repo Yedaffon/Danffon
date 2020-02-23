@@ -15,18 +15,25 @@
 from typing import List
 
 
-# 选择排序:
-def select_sort(slist: List):
-    for i in range(len(slist)):
-        min = i
-        for j in range(i, len(slist)):
-            if slist[j] < slist[min]:
-                min = j
-        slist[i], slist[min] = slist[min], slist[i]
-    return slist
+# 插入排序:
+def insert_sort(ilist: List):
+    for i in range(len(ilist)):
+        if i > 1:
+            if ilist[i-1] <= ilist[i]:
+                continue
+        for j in range(i):
+            if ilist[j] > ilist[i]:
+                ilist.insert(j, ilist[i])
+                del ilist[i+1]
 
 
 if __name__ == '__main__':
     bbl = [1, 2, 3, 4, 5, 6, 1, 2, 3]
-    select_sort(bbl)
+    insert_sort(bbl)
     print(bbl)
+
+
+
+
+
+
