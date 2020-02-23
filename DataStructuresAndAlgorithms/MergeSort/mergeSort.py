@@ -61,6 +61,3 @@ if __name__ == '__main__':
     bbl = [1, 2, 3, 4, 5, 6, 1, 2, 3]
     yebubble = Merge(bbl)
     print(bbl)
-
-
-
