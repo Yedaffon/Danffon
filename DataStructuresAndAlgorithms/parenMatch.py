@@ -18,17 +18,20 @@ import re
 
 def paren(parse):
     so = []
-    parse = re.findall(r"\(|\)", parse)
+    parse = re.findall(r"\[|\]|\{|\}|\(|\)", parse)
+    paren_dict = {"(": ")", "[": "]", "{": "}"}
     for i in parse:
-        if i == "(":
+        if i in "{[(":
             so.append(i)
-        elif i == ")":
-            so.pop()
-    if len(so) == 0:
+        elif i in "}])":
+            right = so.pop()
+            if i != paren_dict[right]:
+                return False
+    if not so:
         return True
 
 
 if __name__ == '__main__':
-    parse = "((aaa)(bbb)(ccc)())"
+    parse = "[(])"
     s = paren(parse)
     print(s)
