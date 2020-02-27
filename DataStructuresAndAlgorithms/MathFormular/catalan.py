@@ -16,13 +16,27 @@
 # 卡特兰数:
 
 
-def catalan(n):
+# 递归
+def catalan_d(n):
     if n == 1:
         return 1
     n = n - 1
-    return (4*n - 2) * catalan(n) / (n + 1)
+    return (4*n - 2) * catalan_d(n) / (n + 1)
+
+
+# 循环
+def catalan_x(n):
+    def catalan(n):
+        s1, g1 = 1, 1
+        for i in range(n, 2 * n):
+            s1 = s1 * i
+        for g in range(0, n):
+            g1 = g1 * g
+        ans = s1 / g1
+        return ans
+    return catalan(n) / (n)
 
 
 if __name__ == '__main__':
-    ans = catalan(4)
+    ans = catalan_d(5)
     print(ans)
