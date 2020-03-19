@@ -37,8 +37,6 @@ class Solution:
         return dp[-1]
 
 
-
-
 if __name__ == '__main__':
     c = Solution()
     print(c.numDecodings("110"))
