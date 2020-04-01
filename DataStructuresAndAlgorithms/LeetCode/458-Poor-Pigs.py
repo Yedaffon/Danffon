@@ -33,7 +33,3 @@ if __name__ == '__main__':
     c = Solution()
     d = c.poorPigs(1000, 15, 60)
     print(d)
-
-
-
-
