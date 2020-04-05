@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 from typing import Callable
 import threading
 
@@ -46,3 +47,18 @@ class ZeroEvenOdd(object):
                 self.Zero.release()
 
 
+class Number(object):
+
+    def __init__(self, n):
+        self.n = n
+        print(self.n, end="")
+
+
+if __name__ == '__main__':
+    c = ZeroEvenOdd(2)
+    thread0 = threading.Thread(target=c.zero, args=(Number,))
+    thread1 = threading.Thread(target=c.odd, args=(Number,))
+    thread2 = threading.Thread(target=c.even, args=(Number,))
+    thread0.start()
+    thread1.start()
+    thread2.start()
