@@ -25,7 +25,7 @@ class Solution(object):
                     start = tmp
             else:
                 dicts[v] = k
-                num = i + 1 - start
+                num = k + 1 - start
                 if max_num < num:
                     max_num = num
         return max_num
