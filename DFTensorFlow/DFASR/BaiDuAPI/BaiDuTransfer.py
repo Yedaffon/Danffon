@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from DFTensorFlow.DFASR.BaiDuAPI.mysql_helper import MysqlHelper
+from mysql_helper import MysqlHelper
 
 import socket
 
@@ -21,6 +21,8 @@ from urllib.request import urlopen
 from urllib.request import Request
 from urllib.error import URLError
 from urllib.parse import urlencode
+
+
 
 import numpy as np
 import requests
@@ -33,8 +35,8 @@ import pymysql
 
 import ssl
 
+socket.setdefaulttimeout(30)
 ssl._create_default_https_context = ssl._create_unverified_context
-socket.setdefaulttimeout(20)
 
 APPID = "19419101"
 API_KEY = 'xQM69KK214IOUm9sutj4NiIP'
@@ -56,11 +58,11 @@ def fetch_token():
               "client_secret": SECRET_KEY}
     post_data = urlencode(params)
     post_data = post_data.encode("utf-8")
-    req = Request(TOKEN_URL, post_data,)
+    req = Request(TOKEN_URL, post_data)
 
     try:
-        f = urlopen(req, timeout=5)
-        result_str = f.read()
+        fout = urlopen(req, timeout=5)
+        result_str = fout.read()
     except URLError as err:
         print("token http response http code:" + str(err))
         result_str = err
@@ -129,19 +131,12 @@ def query_result(task_ids_list: dict):
 
         headers = {'content-type': "application/json"}
 
-        while True:
-            response = requests.post(url,
-                                     params=token,
-                                     data=json.dumps(body),
-                                     headers=headers,
-                                     timeout=1)
-            if response.status_code == 200:
-                response.close()
-                break
-            else:
-                print("连接断开, 正在重连中....")
-                response.close()
-                time.sleep(10)
+        response = requests.post(url,
+                                 params=token,
+                                 data=json.dumps(body),
+                                 headers=headers,
+                                 timeout=1)
+
         results = json.dumps(response.json(), ensure_ascii=False)
 
         # results = results.split("\n")
@@ -168,11 +163,27 @@ def query_result(task_ids_list: dict):
 
 
 if __name__ == '__main__':
+
+    # num = 0
+    # with open("task.txt", "r", encoding="utf-8") as fr:
+    #     data = [i.strip() for i in fr]
+    # for i in data:
+    #     try:
+    #         task_ids_list = eval(i)
+    #         re_err = query_result(task_ids_list)
+    #         if re_err == "success":
+    #             num += 1
+    #             print("success: %d" % num)
+    #             time.sleep(3)
+    #     except Exception as e:
+    #         print("final error")
+    #         time.sleep(3)
+
     with open("phone_record.txt", "r", encoding="utf-8") as fr:
         PRD = [i.split("\t") for i in fr]
     task_list = []
     num = 0
-    for pred in PRD[785:]:
+    for pred in PRD[1399:]:
         try:
             task_ids_list = create_task([pred])
             time.sleep(40)
